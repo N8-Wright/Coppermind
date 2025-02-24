@@ -1,7 +1,7 @@
 #include "WriterStreamWrapper.h"
 #include "ReaderStreamWrapper.h"
 
-#include "RpcSrv.h"
+#include "RpcProcessor.h"
 #include "RpcPacker.h"
 #include "RpcUnpacker.h"
 #include "Rpc.h"
@@ -14,7 +14,7 @@ using namespace Coppermind::IO;
 
 TEST_CASE("Add procedure works", "[RpcSrv]")
 {
-    RpcSrv srv;
+    RpcProcessor srv;
     srv.Add("add", [](BinaryUnpacker& input, BinaryPacker& output)
     {
         auto a = input.Read<int32_t>();

@@ -1,4 +1,4 @@
-#include "RpcSrv.h"
+#include "RpcProcessor.h"
 #include "RpcException.h"
 #include "RpcUnpacker.h"
 #include "RpcPacker.h"
@@ -7,12 +7,12 @@
 #include <ostream>
 namespace Coppermind::Rpc
 {
-    void RpcSrv::Add(std::string rpc, ArgDecoder decoder)
+    void RpcProcessor::Add(std::string rpc, ArgDecoder decoder)
     {
 		m_procedures.emplace(std::move(rpc), std::move(decoder));
 	}
 
-	void RpcSrv::Process(IO::Reader& input, IO::Writer& output)
+	void RpcProcessor::Process(IO::Reader& input, IO::Writer& output)
 	{
 		RpcUnpacker unpacker(input);
 		RpcPacker packer(output);

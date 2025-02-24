@@ -14,7 +14,7 @@
 
 namespace Coppermind::Rpc
 {
-	class RpcSrv
+	class RpcProcessor
 	{
 	private:
 		using ArgDecoder = std::function<void(BinaryUnpacker&, BinaryPacker&)>;

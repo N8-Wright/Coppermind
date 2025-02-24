@@ -3,8 +3,8 @@ add_library(Coppermind.Rpc
     BinaryPacker.h
     BinaryUnpacker.cpp
     BinaryUnpacker.h
-    RpcSrv.cpp
-    RpcSrv.h
+    RpcProcessor.cpp
+    RpcProcessor.h
     RpcException.cpp
     RpcException.h
     RpcPacker.cpp
@@ -25,9 +25,9 @@ add_executable(RpcPackerTests RpcPackerTests.cpp)
 target_link_libraries(RpcPackerTests PRIVATE Coppermind::Rpc Catch2::Catch2WithMain)
 catch_discover_tests(RpcPackerTests)
 
-add_executable(RpcSrvTests RpcSrvTests.cpp)
-target_link_libraries(RpcSrvTests PRIVATE Coppermind::Rpc Catch2::Catch2WithMain)
-catch_discover_tests(RpcSrvTests)
+add_executable(RpcProcessorTests RpcProcessorTests.cpp)
+target_link_libraries(RpcProcessorTests PRIVATE Coppermind::Rpc Catch2::Catch2WithMain)
+catch_discover_tests(RpcProcessorTests)
 
 add_executable(RpcUnpackerTests RpcUnpackerTests.cpp)
 target_link_libraries(RpcUnpackerTests PRIVATE Coppermind::Rpc Catch2::Catch2WithMain)
