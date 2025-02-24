@@ -8,7 +8,7 @@
 #include <span>
 namespace Coppermind::Net
 {
-	class TcpSocket : public IO::Reader, IO::Writer
+	class TcpSocket : public IO::Reader, public IO::Writer
 	{
 		SocketHandle m_socketHandle;
 
