@@ -46,4 +46,9 @@ namespace Coppermind::Net
 	{
 		return std::unique_ptr<TcpSocket>(new TcpSocket(port));
 	}
+
+    std::unique_ptr<TcpSocket> Network::CreateTcpSocket(std::string_view address, std::string_view port)
+    {
+		return std::unique_ptr<TcpSocket>(new TcpSocket(address, port));
+    }
 }

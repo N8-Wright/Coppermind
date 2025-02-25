@@ -1,0 +1,24 @@
+#include "Networking.h"
+#include "TcpSocket.h"
+#include "RpcClient.h"
+
+#include <iostream>
+using namespace Coppermind;
+
+void ProcessResponse(Rpc::BinaryUnpacker& input)
+{
+    const auto result = input.Read<std::string>();
+    std::cout << "Received response: " << result << "\n";
+}
+
+int main()
+{
+    Net::Network net;
+    auto client = Rpc::RpcClient(net.CreateTcpSocket("localhost", "8080"));
+
+    client.Call("Hello", ProcessResponse, "Jim");
+    client.Call("Hello", ProcessResponse, "Bob");
+    client.Call("Hello", ProcessResponse, "John");
+
+    return 0;
+}

@@ -63,6 +63,32 @@ namespace Coppermind::Net
 		}
 	}
 
+	TcpSocket::TcpSocket(std::string_view address, std::string_view port)
+	{
+		struct addrinfo hints = {};
+		struct addrinfo* res = nullptr;
+
+		hints.ai_family = AF_UNSPEC; // use IPv4 or IPv6, whichever
+		hints.ai_socktype = SOCK_STREAM;
+
+		const auto result = getaddrinfo(nullptr, port.data(), &hints, &res);
+		if (result != 0)
+		{
+			throw std::system_error(result, std::system_category());
+		}
+
+		m_socketHandle = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
+		if (m_socketHandle == InvalidSocket)
+		{
+			throw std::system_error(GetLastError(), std::system_category());
+		}
+
+		if (connect(m_socketHandle, res->ai_addr, res->ai_addrlen) == SocketError)
+		{
+			throw std::system_error(GetLastError(), std::system_category());
+		}
+	}
+
 	TcpSocket::TcpSocket(SocketHandle handle)
 		: m_socketHandle(handle)
 	{

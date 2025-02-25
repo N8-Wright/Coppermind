@@ -19,11 +19,18 @@ namespace Coppermind::Rpc
 
                 try
                 {
-                    m_processor->Process(*client, *client);
-                }
-                catch (const RpcException &e)
+                    while (1)
+                    {
+                        m_processor->Process(*client, *client);
+                    }
+                }   
+                catch (const RpcException& e)
                 {
                     std::cerr << "RPC Error: " << e.what() << "\n";
+                }
+                catch (const std::system_error& e)
+                {
+                    std::cerr << "System Error (" << e.code() << "): " << e.what() << "\n";
                 }
                 catch (const std::exception& e)
                 {

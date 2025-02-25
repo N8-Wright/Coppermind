@@ -13,6 +13,7 @@ namespace Coppermind::Net
 		SocketHandle m_socketHandle;
 
 		TcpSocket(std::string_view port);
+		TcpSocket(std::string_view address, std::string_view port);
 		TcpSocket(SocketHandle);
 
 		friend Network;

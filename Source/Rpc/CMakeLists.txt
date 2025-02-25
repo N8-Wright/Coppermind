@@ -13,6 +13,8 @@ add_library(Coppermind.Rpc
     RpcUnpacker.h
     RpcSrv.cpp
     RpcSrv.h
+    RpcClient.cpp
+    RpcClient.h
 )
 
 target_link_libraries(Coppermind.Rpc PUBLIC Coppermind::Net)
