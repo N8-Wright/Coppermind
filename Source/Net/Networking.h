@@ -10,14 +10,16 @@
 namespace Coppermind::Net
 {
 	#ifdef _WIN32
-	typedef int AddressLength;
+	using AddressLength = int;
+	using SendReceiveSizeType = int;
 
 	using SocketHandle = SOCKET;
 	static constexpr SocketHandle InvalidSocket = INVALID_SOCKET;
 	static constexpr auto SocketError = SOCKET_ERROR;
 	static inline SocketHandle CloseSocket(SocketHandle sock) { return closesocket(sock); }
 	#else
-	typedef socklen_t AddressLength;
+	using AddressLength = socklen_t;
+	using SendReceiveSizeType = size_t;
 
 	using SocketHandle = int;
 	static constexpr SocketHandle InvalidSocket = -1;

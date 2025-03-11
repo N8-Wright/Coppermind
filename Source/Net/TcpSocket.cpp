@@ -52,7 +52,7 @@ namespace Coppermind::Net
 
 		ReuseAddress(m_socketHandle);
 
-		if (bind(m_socketHandle, res->ai_addr, res->ai_addrlen) == -1)
+		if (bind(m_socketHandle, res->ai_addr, static_cast<AddressLength>(res->ai_addrlen)) == -1)
 		{
 			throw std::system_error(GetLastError(), std::system_category());
 		}
@@ -71,7 +71,7 @@ namespace Coppermind::Net
 		hints.ai_family = AF_UNSPEC; // use IPv4 or IPv6, whichever
 		hints.ai_socktype = SOCK_STREAM;
 
-		const auto result = getaddrinfo(nullptr, port.data(), &hints, &res);
+		const auto result = getaddrinfo(address.data(), port.data(), &hints, &res);
 		if (result != 0)
 		{
 			throw std::system_error(result, std::system_category());
@@ -83,7 +83,7 @@ namespace Coppermind::Net
 			throw std::system_error(GetLastError(), std::system_category());
 		}
 
-		if (connect(m_socketHandle, res->ai_addr, res->ai_addrlen) == SocketError)
+		if (connect(m_socketHandle, res->ai_addr, static_cast<AddressLength>(res->ai_addrlen)) == SocketError)
 		{
 			throw std::system_error(GetLastError(), std::system_category());
 		}
@@ -128,7 +128,7 @@ namespace Coppermind::Net
 
 	size_t TcpSocket::Write(const std::span<const char> data)
 	{
-		const auto bytesSent = send(m_socketHandle, data.data(), data.size(), 0);
+		const auto bytesSent = send(m_socketHandle, data.data(), static_cast<SendReceiveSizeType>(data.size()), 0);
 		if (bytesSent == InvalidSocket)
 		{
 			throw std::system_error(GetLastError(), std::system_category());
@@ -139,7 +139,7 @@ namespace Coppermind::Net
 
 	size_t TcpSocket::Read(std::span<char> buffer)
 	{
-		const auto bytesReceived = recv(m_socketHandle, buffer.data(), buffer.size(), 0);
+		const auto bytesReceived = recv(m_socketHandle, buffer.data(), static_cast<SendReceiveSizeType>(buffer.size()), 0);
 		if (bytesReceived == InvalidSocket)
 		{
 			throw std::system_error(GetLastError(), std::system_category());
