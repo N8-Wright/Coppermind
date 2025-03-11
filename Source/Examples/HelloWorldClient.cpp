@@ -14,11 +14,17 @@ void ProcessResponse(Rpc::BinaryUnpacker& input)
 int main()
 {
     Net::Network net;
-    auto client = Rpc::RpcClient(net.CreateTcpSocket("localhost", "8080"));
+    try
+    {
+        auto client = Rpc::RpcClient(net.CreateTcpSocket("localhost", "8080"));
 
-    client.Call("Hello", ProcessResponse, "Jim");
-    client.Call("Hello", ProcessResponse, "Bob");
-    client.Call("Hello", ProcessResponse, "John");
-
+        client.Call("Hello", ProcessResponse, "Jim");
+        client.Call("Hello", ProcessResponse, "Bob");
+        client.Call("Hello", ProcessResponse, "John");
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Unexpected error: " << e.what();
+    }
     return 0;
 }

@@ -11,7 +11,7 @@ int main()
     auto processor = std::make_unique<Rpc::RpcProcessor>();
     processor->Add("Hello", [](auto& input, auto& output)
     {
-        auto name = input.Read<std::string>();
+        auto name = input.ReadSized<std::string>(50);
         output << "Hello, " + name;
     });
 
