@@ -23,5 +23,10 @@ namespace Coppermind::Rpc
 		template<> int32_t Read();
 		template<> uint32_t Read();
 		template<> std::string Read();
+
+		template<typename T>
+		T ReadSized(size_t maxBytes);
+
+		template<> std::string ReadSized(size_t);
 	};
 }

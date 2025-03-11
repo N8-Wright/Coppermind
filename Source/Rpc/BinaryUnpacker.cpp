@@ -52,4 +52,25 @@ namespace Coppermind::Rpc
 		
 		return str;
 	}
+
+	template <>
+    std::string BinaryUnpacker::ReadSized(size_t maxBytes)
+    {
+        const auto size = Read<uint32_t>();
+		if (size <= maxBytes)
+		{
+			std::string str;
+			str.resize(size);
+			if (m_reader.Read(str) != str.size())
+			{
+				throw std::runtime_error("Unable to read correct number of bytes in string");
+			}
+			
+			return str;
+		}
+		else
+		{
+			throw std::runtime_error("Unable to read string. Size is too large");
+		}
+    }
 }
