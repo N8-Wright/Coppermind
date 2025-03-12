@@ -15,7 +15,7 @@ using namespace Coppermind::IO;
 TEST_CASE("Add procedure works", "[RpcSrv]")
 {
     RpcProcessor srv;
-    srv.Add("add", [](BinaryUnpacker& input, BinaryPacker& output)
+    srv.Add("add", [](RpcUnpacker& input, RpcPacker& output)
     {
         auto a = input.Read<int32_t>();
         auto b = input.Read<int32_t>();

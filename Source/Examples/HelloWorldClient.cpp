@@ -5,7 +5,7 @@
 #include <iostream>
 using namespace Coppermind;
 
-void ProcessResponse(Rpc::BinaryUnpacker& input)
+void ProcessResponse(Rpc::RpcUnpacker& input)
 {
     const auto result = input.Read<std::string>();
     std::cout << "Received response: " << result << "\n";
@@ -21,6 +21,7 @@ int main()
         client.Call("Hello", ProcessResponse, "Jim");
         client.Call("Hello", ProcessResponse, "Bob");
         client.Call("Hello", ProcessResponse, "John");
+        client.Call("Hello", ProcessResponse, 99);
     }
     catch (const std::exception& e)
     {

@@ -21,5 +21,6 @@ TEST_CASE("RPC Packer encodes version information", "[RpcPacker]")
     ReaderStreamWrapper reader(stream);
     BinaryUnpacker unpacker(reader);
     REQUIRE(unpacker.Read<uint32_t>() == CurrentVersion);
+    REQUIRE(unpacker.Read<RpcType>() == RpcType::String);
     REQUIRE(unpacker.Read<std::string>() == "Test");
 }

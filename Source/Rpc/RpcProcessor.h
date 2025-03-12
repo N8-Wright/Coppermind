@@ -2,8 +2,8 @@
 
 #include "Writer.h"
 
-#include "BinaryUnpacker.h"
-#include "BinaryPacker.h"
+#include "RpcPacker.h"
+#include "RpcUnpacker.h"
 #include "TcpSocket.h"
 
 #include <unordered_map>
@@ -17,7 +17,7 @@ namespace Coppermind::Rpc
 	class RpcProcessor
 	{
 	private:
-		using ArgDecoder = std::function<void(BinaryUnpacker&, BinaryPacker&)>;
+		using ArgDecoder = std::function<void(RpcUnpacker&, RpcPacker&)>;
 		std::unordered_map<std::string, ArgDecoder> m_procedures;
 
 	public:

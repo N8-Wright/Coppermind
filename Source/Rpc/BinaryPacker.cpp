@@ -9,8 +9,26 @@ namespace Coppermind::Rpc
     {
     }
 
-	BinaryPacker& operator<<(BinaryPacker& packer, int32_t value)
-	{
+    BinaryPacker &operator<<(BinaryPacker &packer, RpcType value)
+    {
+        static_assert(sizeof(RpcTypeWireType) == sizeof(uint8_t));
+		return operator<<(packer, static_cast<RpcTypeWireType>(value));
+    }
+
+    BinaryPacker &operator<<(BinaryPacker &packer, uint8_t value)
+    {
+        std::array<char, 1> buffer;
+		buffer[0] = value;
+		if (packer.m_writer.Write(buffer) != sizeof(value))
+		{
+			throw std::runtime_error("Unable to write int32_t");
+		}
+
+		return packer;
+    }
+
+    BinaryPacker &operator<<(BinaryPacker &packer, int32_t value)
+    {
 		value = htonl(value);
 		std::array<char, sizeof(value)> buffer;
 		memcpy(buffer.data(), &value, buffer.size());

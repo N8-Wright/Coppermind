@@ -1,5 +1,7 @@
 #pragma once
 #include "Reader.h"
+#include "Rpc.h"
+
 #include <cstdint>
 #include <string>
 namespace Coppermind::Rpc
@@ -20,6 +22,7 @@ namespace Coppermind::Rpc
 			return value;
 		}
 
+		template<> RpcType Read();
 		template<> int32_t Read();
 		template<> uint32_t Read();
 		template<> std::string Read();
