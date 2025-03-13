@@ -15,6 +15,12 @@ namespace Coppermind::Rpc
 		return operator<<(packer, static_cast<RpcTypeWireType>(value));
     }
 
+    BinaryPacker &operator<<(BinaryPacker &packer, RpcStatus value)
+    {
+        static_assert(sizeof(RpcStatusWireType) == sizeof(uint8_t));
+		return operator<<(packer, static_cast<RpcStatusWireType>(value));
+    }
+
     BinaryPacker &operator<<(BinaryPacker &packer, uint8_t value)
     {
         std::array<char, 1> buffer;

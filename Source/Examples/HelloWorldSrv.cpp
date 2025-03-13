@@ -1,3 +1,4 @@
+#include "Rpc.h"
 #include "RpcSrv.h"
 #include "RpcProcessor.h"
 #include "BinaryPacker.h"
@@ -12,6 +13,7 @@ int main()
     processor->Add("Hello", [](auto& input, auto& output)
     {
         const auto name = input.ReadSized<std::string>(50);
+        output << Rpc::RpcStatus::Ok;
         output << "Hello, " + name;
     });
 

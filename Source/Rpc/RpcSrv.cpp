@@ -1,5 +1,7 @@
 #include "RpcSrv.h"
 #include "RpcException.h"
+
+#include <cassert>
 #include <iostream>
 
 namespace Coppermind::Rpc
@@ -23,10 +25,10 @@ namespace Coppermind::Rpc
                     {
                         m_processor->Process(*client, *client);
                     }
-                }   
+                }
                 catch (const RpcException& e)
                 {
-                    std::cerr << "RPC Error: " << e.what() << "\n";
+                    std::cerr << "Rpc Error (" << static_cast<int>(e.Status()) << "): " << e.what() << "\n";
                 }
                 catch (const std::system_error& e)
                 {

@@ -23,6 +23,7 @@ namespace Coppermind::Rpc
 		}
 
 		template<> RpcType Read();
+		template<> RpcStatus Read();
 		template<> int32_t Read();
 		template<> uint32_t Read();
 		template<> std::string Read();

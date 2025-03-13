@@ -15,7 +15,7 @@ namespace Coppermind::Rpc
         const auto version = m_unpacker.Read<uint32_t>();
         if (version != CurrentVersion)
         {
-            throw RpcException("Invalid RPC version");
+            throw RpcException("Invalid RPC version", RpcStatus::InvalidType);
         }
 
         return version;
@@ -32,7 +32,7 @@ namespace Coppermind::Rpc
         const auto rpcType = m_unpacker.Read<RpcType>();
         if (rpcType != RpcType::Int)
         {
-            throw RpcException("Expected RpcType of Int");
+            throw RpcException("Expected RpcType of Int", RpcStatus::InvalidType);
         }
 
         return m_unpacker.Read<int32_t>();
@@ -44,10 +44,16 @@ namespace Coppermind::Rpc
         const auto rpcType = m_unpacker.Read<RpcType>();
         if (rpcType != RpcType::Uint)
         {
-            throw RpcException("Expected RpcType of Uint");
+            throw RpcException("Expected RpcType of Uint", RpcStatus::InvalidType);
         }
 
         return m_unpacker.Read<uint32_t>();
+    }
+
+    template<>
+    RpcStatus RpcUnpacker::Read()
+    {
+        return m_unpacker.Read<RpcStatus>();
     }
 
     template <>
@@ -56,7 +62,7 @@ namespace Coppermind::Rpc
         const auto rpcType = m_unpacker.Read<RpcType>();
         if (rpcType != RpcType::String)
         {
-            throw RpcException("Expected RpcType of String");
+            throw RpcException("Expected RpcType of String", RpcStatus::InvalidType);
         }
 
         return m_unpacker.Read<std::string>();
@@ -68,7 +74,7 @@ namespace Coppermind::Rpc
         const auto rpcType = m_unpacker.Read<RpcType>();
         if (rpcType != RpcType::String)
         {
-            throw RpcException("Expected RpcType of String");
+            throw RpcException("Expected RpcType of String", RpcStatus::InvalidType);
         }
 
         return m_unpacker.ReadSized<std::string>(maxBytes);

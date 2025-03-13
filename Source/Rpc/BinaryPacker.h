@@ -23,6 +23,7 @@ namespace Coppermind::Rpc
 		}
 
 		friend BinaryPacker& operator<<(BinaryPacker& os, RpcType value);
+		friend BinaryPacker& operator<<(BinaryPacker& os, RpcStatus value);
 		friend BinaryPacker& operator<<(BinaryPacker& os, uint8_t value);
 		friend BinaryPacker& operator<<(BinaryPacker& os, int32_t value);
 		friend BinaryPacker& operator<<(BinaryPacker& os, uint32_t value);

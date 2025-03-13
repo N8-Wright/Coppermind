@@ -3,9 +3,12 @@
 #include "RpcPacker.h"
 #include "RpcUnpacker.h"
 #include "RpcException.h"
+#include "Rpc.h"
 
 #include <memory>
 #include <string_view>
+#include <iostream>
+
 namespace Coppermind::Rpc
 {
     class RpcClient
@@ -24,7 +27,15 @@ namespace Coppermind::Rpc
             const auto rpcVersion = unpacker.ReadVersion();
             if (rpcVersion == 1)
             {
-                read(unpacker);
+                const auto status = unpacker.Read<RpcStatus>();
+                if (status == RpcStatus::Ok)
+                {
+                    read(unpacker);
+                }
+                else
+                {
+                    std::cerr << "Request failed: " << static_cast<int32_t>(status) << "\n";
+                }
             }
             else
             {

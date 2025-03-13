@@ -5,6 +5,7 @@
 
 #include <istream>
 #include <ostream>
+#include <iostream>
 namespace Coppermind::Rpc
 {
     void RpcProcessor::Add(std::string rpc, ArgDecoder decoder)
@@ -17,19 +18,28 @@ namespace Coppermind::Rpc
 		RpcUnpacker unpacker(input);
 		RpcPacker packer(output);
 
-		const auto rpcVersion = unpacker.ReadVersion();
-		if (rpcVersion == 1)
+		try
 		{
-			const auto procedureName = unpacker.ReadProcedureName();
-			auto procedure = m_procedures.find(procedureName);
-			if (procedure != m_procedures.end())
+			const auto rpcVersion = unpacker.ReadVersion();
+			if (rpcVersion == 1)
 			{
-				procedure->second(unpacker, packer);
+				const auto procedureName = unpacker.ReadProcedureName();
+				auto procedure = m_procedures.find(procedureName);
+				if (procedure != m_procedures.end())
+				{
+					procedure->second(unpacker, packer);
+				}
+			}
+			else
+			{
+				throw RpcException("Unable to process request of this version");
 			}
 		}
-		else
+		catch (const RpcException& e)
 		{
-			throw RpcException("Unable to process request of this version");
+			std::cerr << e.what() << "\n";
+			packer << e.Status();
+			throw e;
 		}
 	}
 }

@@ -16,6 +16,12 @@ namespace Coppermind::Rpc
         m_packer << CurrentVersion; // Don't write type info for rpc version
     }
 
+    RpcPacker &operator<<(RpcPacker &packer, RpcStatus status)
+    {
+        packer.m_packer << status;
+        return packer;
+    }
+
     RpcPacker &operator<<(RpcPacker &os, int32_t value)
     {
         os.m_packer << static_cast<uint8_t>(RpcType::Int);

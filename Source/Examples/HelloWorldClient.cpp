@@ -18,9 +18,9 @@ int main()
     {
         auto client = Rpc::RpcClient(net.CreateTcpSocket("localhost", "8080"));
 
-        client.Call("Hello", ProcessResponse, "Jim");
-        client.Call("Hello", ProcessResponse, "Bob");
-        client.Call("Hello", ProcessResponse, "John");
+        // client.Call("Hello", ProcessResponse, "Jim");
+        // client.Call("Hello", ProcessResponse, "Bob");
+        // client.Call("Hello", ProcessResponse, "John");
         client.Call("Hello", ProcessResponse, 99);
     }
     catch (const std::exception& e)

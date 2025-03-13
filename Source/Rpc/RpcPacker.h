@@ -1,5 +1,6 @@
 #pragma once
 #include "Writer.h"
+#include "Rpc.h"
 #include "BinaryPacker.h"
 #include <iosfwd>
 namespace Coppermind::Rpc
@@ -10,7 +11,7 @@ namespace Coppermind::Rpc
         BinaryPacker m_packer;
     public:
         RpcPacker(IO::Writer& writer, std::string_view procedureName);
-        explicit RpcPacker(IO::Writer& stream);
+        RpcPacker(IO::Writer& stream);
 
         template<typename T>
 		friend RpcPacker& operator<<(RpcPacker& packer, const T& value)
@@ -19,6 +20,7 @@ namespace Coppermind::Rpc
 			return packer;
 		}
 
+        friend RpcPacker& operator<<(RpcPacker& os, RpcStatus);
 		friend RpcPacker& operator<<(RpcPacker& os, int32_t value);
 		friend RpcPacker& operator<<(RpcPacker& os, uint32_t value);
 		friend RpcPacker& operator<<(RpcPacker& os, std::string_view value);

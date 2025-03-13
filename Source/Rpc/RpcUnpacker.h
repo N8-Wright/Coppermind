@@ -1,6 +1,7 @@
 #pragma once
 #include "Reader.h"
 #include "BinaryUnpacker.h"
+#include "Rpc.h"
 #include <iosfwd>
 namespace Coppermind::Rpc
 {
@@ -18,6 +19,7 @@ namespace Coppermind::Rpc
 		T Read();
 		template<> int32_t Read();
 		template<> uint32_t Read();
+        template<> RpcStatus Read();
 		template<> std::string Read();
 
 		template<typename T>

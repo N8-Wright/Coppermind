@@ -16,11 +16,25 @@ namespace Coppermind::Rpc
 		std::array<char, sizeof(RpcTypeWireType)> buffer;
 		if (m_reader.Read(buffer) != sizeof(value))
 		{
-			throw std::runtime_error("Unable to read correct number of bytes in int32_t");
+			throw std::runtime_error("Unable to read correct number of bytes in RpcType");
 		}
 
 		memcpy(&value, buffer.data(), sizeof(value));
 		return static_cast<RpcType>(value);
+	}
+
+	template<>
+	RpcStatus BinaryUnpacker::Read()
+	{
+		RpcStatusWireType value;
+		std::array<char, sizeof(RpcStatusWireType)> buffer;
+		if (m_reader.Read(buffer) != sizeof(value))
+		{
+			throw std::runtime_error("Unable to read correct number of bytes in RpcStatus");
+		}
+
+		memcpy(&value, buffer.data(), sizeof(value));
+		return static_cast<RpcStatus>(value);
 	}
 
 	template<>
