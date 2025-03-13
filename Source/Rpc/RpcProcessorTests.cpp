@@ -12,6 +12,39 @@
 using namespace Coppermind::Rpc;
 using namespace Coppermind::IO;
 
+
+TEST_CASE("Procedure name too long", "[RpcProcessor]")
+{
+    RpcProcessor srv;
+    srv.Add("add", [](RpcUnpacker& input, RpcPacker& output)
+    {
+        auto a = input.Read<int32_t>();
+        auto b = input.Read<int32_t>();
+
+        output << RpcStatus::Ok;
+        output << a + b;
+    });
+
+    std::stringstream input;
+    WriterStreamWrapper wrapper(input);
+
+    std::string procedure;
+    procedure.append(3333, 'a');
+    PackRpcRequest(wrapper, procedure, 1, 2);
+
+    std::stringstream output;
+    WriterStreamWrapper outputWrapper(output);
+    ReaderStreamWrapper inputWrapper(input);
+
+    REQUIRE_THROWS(srv.Process(inputWrapper, outputWrapper));
+
+    ReaderStreamWrapper reader(output);
+    RpcUnpacker unpacker(reader);
+    
+    REQUIRE(unpacker.ReadVersion() == CurrentVersion);
+    REQUIRE(unpacker.Read<RpcStatus>() == RpcStatus::InvalidProcedure);
+}
+
 TEST_CASE("Invalid argument type", "[RpcProcessor]")
 {
     RpcProcessor srv;

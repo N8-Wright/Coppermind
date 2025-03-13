@@ -3,3 +3,9 @@ target_link_libraries(HelloWorldSrv Coppermind::Rpc)
 
 add_executable(HelloWorldClient HelloWorldClient.cpp)
 target_link_libraries(HelloWorldClient Coppermind::Rpc)
+
+add_executable(HelloWorldClientInvalidParam HelloWorldClientInvalidParam.cpp)
+target_link_libraries(HelloWorldClientInvalidParam Coppermind::Rpc)
+
+add_executable(HelloWorldClientProcedureNameTooLong HelloWorldClientProcedureNameTooLong.cpp)
+target_link_libraries(HelloWorldClientProcedureNameTooLong Coppermind::Rpc)

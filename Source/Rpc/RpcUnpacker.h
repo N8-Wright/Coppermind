@@ -11,7 +11,7 @@ namespace Coppermind::Rpc
     class RpcUnpacker
     {
     private:
-        static constexpr const auto ProcedureNameMaxBytes = 2;
+        static constexpr const auto ProcedureNameMaxBytes = 1024;
         BinaryUnpacker m_unpacker;
     public:
         RpcUnpacker(IO::Reader& reader);
