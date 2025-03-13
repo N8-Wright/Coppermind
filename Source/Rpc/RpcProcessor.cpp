@@ -8,9 +8,9 @@
 #include <iostream>
 namespace Coppermind::Rpc
 {
-    void RpcProcessor::Add(std::string rpc, ArgDecoder decoder)
+    void RpcProcessor::Add(std::string rpc, Procedure procedure)
     {
-		m_procedures.emplace(std::move(rpc), std::move(decoder));
+		m_procedures.emplace(std::move(rpc), std::move(procedure));
 	}
 
 	void RpcProcessor::Process(IO::Reader& input, IO::Writer& output)
@@ -37,7 +37,6 @@ namespace Coppermind::Rpc
 		}
 		catch (const RpcException& e)
 		{
-			std::cerr << e.what() << "\n";
 			packer << e.Status();
 			throw e;
 		}

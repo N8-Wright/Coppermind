@@ -4,6 +4,7 @@
 
 #include <cstdint>
 #include <string>
+#include <optional>
 namespace Coppermind::Rpc
 {
 	class BinaryUnpacker
@@ -29,8 +30,8 @@ namespace Coppermind::Rpc
 		template<> std::string Read();
 
 		template<typename T>
-		T ReadSized(size_t maxBytes);
+		std::optional<T> ReadSized(size_t maxBytes);
 
-		template<> std::string ReadSized(size_t);
+		template<> std::optional<std::string> ReadSized(size_t);
 	};
 }

@@ -14,14 +14,15 @@
 
 namespace Coppermind::Rpc
 {
+	
 	class RpcProcessor
 	{
 	private:
-		using ArgDecoder = std::function<void(RpcUnpacker&, RpcPacker&)>;
-		std::unordered_map<std::string, ArgDecoder> m_procedures;
+		using Procedure = std::function<void(RpcUnpacker&, RpcPacker&)>;
+		std::unordered_map<std::string, Procedure> m_procedures;
 
 	public:
-		void Add(std::string rpc, ArgDecoder decoder);
+		void Add(std::string rpc, Procedure decoder);
 		void Process(IO::Reader& input, IO::Writer& output);
 	};
 }

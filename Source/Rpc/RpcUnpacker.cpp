@@ -23,7 +23,15 @@ namespace Coppermind::Rpc
 
     std::string RpcUnpacker::ReadProcedureName()
     {
-        return Read<std::string>();
+        const auto procedure = m_unpacker.ReadSized<std::string>(ProcedureNameMaxBytes);
+        if (procedure)
+        {
+            return procedure.value();
+        }
+        else
+        {
+            throw RpcException("Procedure name is too large", RpcStatus::InvalidProcedure);
+        }
     }
 
     template <>
@@ -69,7 +77,7 @@ namespace Coppermind::Rpc
     }
     
     template <>
-    std::string RpcUnpacker::ReadSized(size_t maxBytes)
+    std::optional<std::string> RpcUnpacker::ReadSized(size_t maxBytes)
     {
         const auto rpcType = m_unpacker.Read<RpcType>();
         if (rpcType != RpcType::String)

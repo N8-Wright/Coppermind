@@ -16,6 +16,7 @@ namespace Coppermind::Rpc
         Ok = 1,
         InternalError = 2,
         InvalidType = 3,
+        InvalidProcedure = 4,
     };
 
     using RpcTypeWireType = uint8_t;

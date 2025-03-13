@@ -7,7 +7,7 @@ namespace Coppermind::Rpc
         : m_packer(BinaryPacker(writer))
     {
         m_packer << CurrentVersion; // Don't write type info for rpc version
-        *this << procedureName;
+        m_packer << procedureName;
     }
 
     RpcPacker::RpcPacker(IO::Writer& stream)

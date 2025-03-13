@@ -20,12 +20,12 @@ namespace Coppermind::Rpc
 			return packer;
 		}
 
-        friend RpcPacker& operator<<(RpcPacker& os, RpcStatus);
-		friend RpcPacker& operator<<(RpcPacker& os, int32_t value);
-		friend RpcPacker& operator<<(RpcPacker& os, uint32_t value);
-		friend RpcPacker& operator<<(RpcPacker& os, std::string_view value);
-		friend RpcPacker& operator<<(RpcPacker& os, const std::string& value);
-		friend RpcPacker& operator<<(RpcPacker& os, const char* value);
+        friend RpcPacker& operator<<(RpcPacker& packer, RpcStatus);
+		friend RpcPacker& operator<<(RpcPacker& packer, int32_t value);
+		friend RpcPacker& operator<<(RpcPacker& packer, uint32_t value);
+		friend RpcPacker& operator<<(RpcPacker& packer, std::string_view value);
+		friend RpcPacker& operator<<(RpcPacker& packer, const std::string& value);
+		friend RpcPacker& operator<<(RpcPacker& packer, const char* value);
     };
 
     template<typename... Args>

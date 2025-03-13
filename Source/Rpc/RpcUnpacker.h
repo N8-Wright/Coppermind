@@ -3,11 +3,15 @@
 #include "BinaryUnpacker.h"
 #include "Rpc.h"
 #include <iosfwd>
+#include <optional>
+#include <cstdint>
+#include <string>
 namespace Coppermind::Rpc
 {
     class RpcUnpacker
     {
     private:
+        static constexpr const auto ProcedureNameMaxBytes = 2;
         BinaryUnpacker m_unpacker;
     public:
         RpcUnpacker(IO::Reader& reader);
@@ -23,8 +27,8 @@ namespace Coppermind::Rpc
 		template<> std::string Read();
 
 		template<typename T>
-		T ReadSized(size_t maxBytes);
+		std::optional<T> ReadSized(size_t maxBytes);
 
-		template<> std::string ReadSized(size_t);
+		template<> std::optional<std::string> ReadSized(size_t);
     };
 }

@@ -82,7 +82,7 @@ namespace Coppermind::Rpc
 	}
 
 	template <>
-    std::string BinaryUnpacker::ReadSized(size_t maxBytes)
+    std::optional<std::string> BinaryUnpacker::ReadSized(size_t maxBytes)
     {
         const auto size = Read<uint32_t>();
 		if (size <= maxBytes)
@@ -98,7 +98,7 @@ namespace Coppermind::Rpc
 		}
 		else
 		{
-			throw std::runtime_error("Unable to read string. Size is too large");
+			return {};
 		}
     }
 }
