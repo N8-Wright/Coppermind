@@ -29,6 +29,10 @@ namespace Coppermind::Rpc
 				{
 					procedure->second(unpacker, packer);
 				}
+				else
+				{
+					throw RpcException("Procedure does not exist", RpcStatus::ProcedureNotFound);
+				}
 			}
 			else
 			{

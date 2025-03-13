@@ -13,6 +13,36 @@ using namespace Coppermind::Rpc;
 using namespace Coppermind::IO;
 
 
+TEST_CASE("Procedure does not exist", "[RpcProcessor]")
+{
+    RpcProcessor srv;
+    srv.Add("add", [](RpcUnpacker& input, RpcPacker& output)
+    {
+        auto a = input.Read<int32_t>();
+        auto b = input.Read<int32_t>();
+
+        output << RpcStatus::Ok;
+        output << a + b;
+    });
+
+    std::stringstream input;
+    WriterStreamWrapper wrapper(input);
+
+    PackRpcRequest(wrapper, "subtract", 1, 2);
+
+    std::stringstream output;
+    WriterStreamWrapper outputWrapper(output);
+    ReaderStreamWrapper inputWrapper(input);
+
+    REQUIRE_THROWS(srv.Process(inputWrapper, outputWrapper));
+
+    ReaderStreamWrapper reader(output);
+    RpcUnpacker unpacker(reader);
+    
+    REQUIRE(unpacker.ReadVersion() == CurrentVersion);
+    REQUIRE(unpacker.Read<RpcStatus>() == RpcStatus::ProcedureNotFound);
+}
+
 TEST_CASE("Procedure name too long", "[RpcProcessor]")
 {
     RpcProcessor srv;
