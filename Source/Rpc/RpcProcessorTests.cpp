@@ -6,14 +6,13 @@
 #include "RpcUnpacker.h"
 #include "Rpc.h"
 
-#include <catch2/catch_test_macros.hpp>
+#include <gtest/gtest.h>
 #include <sstream>
 
 using namespace Coppermind::Rpc;
 using namespace Coppermind::IO;
 
-
-TEST_CASE("Procedure does not exist", "[RpcProcessor]")
+TEST(RpcProcessor, ProcedureDoesNotExist)
 {
     RpcProcessor srv;
     srv.Add("add", [](RpcUnpacker& input, RpcPacker& output)
@@ -34,16 +33,16 @@ TEST_CASE("Procedure does not exist", "[RpcProcessor]")
     WriterStreamWrapper outputWrapper(output);
     ReaderStreamWrapper inputWrapper(input);
 
-    REQUIRE_THROWS(srv.Process(inputWrapper, outputWrapper));
+    ASSERT_ANY_THROW(srv.Process(inputWrapper, outputWrapper));
 
     ReaderStreamWrapper reader(output);
     RpcUnpacker unpacker(reader);
     
-    REQUIRE(unpacker.ReadVersion() == CurrentVersion);
-    REQUIRE(unpacker.Read<RpcStatus>() == RpcStatus::ProcedureNotFound);
+    ASSERT_EQ(unpacker.ReadVersion(), CurrentVersion);
+    ASSERT_EQ(unpacker.Read<RpcStatus>(), RpcStatus::ProcedureNotFound);
 }
 
-TEST_CASE("Procedure name too long", "[RpcProcessor]")
+TEST(RpcProcessor, ProcedureNameTooLong)
 {
     RpcProcessor srv;
     srv.Add("add", [](RpcUnpacker& input, RpcPacker& output)
@@ -66,16 +65,16 @@ TEST_CASE("Procedure name too long", "[RpcProcessor]")
     WriterStreamWrapper outputWrapper(output);
     ReaderStreamWrapper inputWrapper(input);
 
-    REQUIRE_THROWS(srv.Process(inputWrapper, outputWrapper));
+    ASSERT_ANY_THROW(srv.Process(inputWrapper, outputWrapper));
 
     ReaderStreamWrapper reader(output);
     RpcUnpacker unpacker(reader);
     
-    REQUIRE(unpacker.ReadVersion() == CurrentVersion);
-    REQUIRE(unpacker.Read<RpcStatus>() == RpcStatus::InvalidProcedure);
+    ASSERT_EQ(unpacker.ReadVersion(), CurrentVersion);
+    ASSERT_EQ(unpacker.Read<RpcStatus>(), RpcStatus::InvalidProcedure);
 }
 
-TEST_CASE("Invalid argument type", "[RpcProcessor]")
+TEST(RpcProcessor, InvalidArgumentType)
 {
     RpcProcessor srv;
     srv.Add("add", [](RpcUnpacker& input, RpcPacker& output)
@@ -95,16 +94,16 @@ TEST_CASE("Invalid argument type", "[RpcProcessor]")
     WriterStreamWrapper outputWrapper(output);
     ReaderStreamWrapper inputWrapper(input);
 
-    REQUIRE_THROWS(srv.Process(inputWrapper, outputWrapper));
+    ASSERT_ANY_THROW(srv.Process(inputWrapper, outputWrapper));
 
     ReaderStreamWrapper reader(output);
     RpcUnpacker unpacker(reader);
     
-    REQUIRE(unpacker.ReadVersion() == CurrentVersion);
-    REQUIRE(unpacker.Read<RpcStatus>() == RpcStatus::InvalidType);
+    ASSERT_EQ(unpacker.ReadVersion(), CurrentVersion);
+    ASSERT_EQ(unpacker.Read<RpcStatus>(), RpcStatus::InvalidType);
 }
 
-TEST_CASE("Add procedure works", "[RpcProcessor]")
+TEST(RpcProcessor, AddProcedureWorks)
 {
     RpcProcessor srv;
     srv.Add("add", [](RpcUnpacker& input, RpcPacker& output)
@@ -130,8 +129,8 @@ TEST_CASE("Add procedure works", "[RpcProcessor]")
     ReaderStreamWrapper reader(output);
     RpcUnpacker unpacker(reader);
     
-    REQUIRE(unpacker.ReadVersion() == CurrentVersion);
-    REQUIRE(unpacker.Read<RpcStatus>() == RpcStatus::Ok);
+    ASSERT_EQ(unpacker.ReadVersion(), CurrentVersion);
+    ASSERT_EQ(unpacker.Read<RpcStatus>(), RpcStatus::Ok);
     const auto result = unpacker.Read<int32_t>();
-    REQUIRE(3 == result);
+    ASSERT_EQ(3, result);
 }
