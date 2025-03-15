@@ -1,11 +1,12 @@
 #include "TcpSocket.h"
 #include "Networking.h"
-#include <catch2/catch_test_macros.hpp>
-#include <iostream>
+
+#include <gtest/gtest.h>
+
 using namespace Coppermind::Net;
 
-TEST_CASE("TcpSocket constructor works without throwing exception", "[TcpSocket]")
+TEST(TcpSocket, ConstructorDoesNotThrow)
 {
     Network net;
-    REQUIRE_NOTHROW(net.CreateTcpSocket("3940"));
+    ASSERT_NO_THROW(net.CreateTcpSocket("3940"));
 }

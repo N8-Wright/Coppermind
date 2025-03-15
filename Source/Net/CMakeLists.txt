@@ -15,5 +15,5 @@ target_link_libraries(Coppermind.Net PUBLIC Coppermind::IO)
 add_library(Coppermind::Net ALIAS Coppermind.Net)
 
 add_executable(TcpSocketTests TcpSocketTests.cpp)
-target_link_libraries(TcpSocketTests PRIVATE Coppermind::Net Catch2::Catch2WithMain)
-catch_discover_tests(TcpSocketTests)
+target_link_libraries(TcpSocketTests PRIVATE Coppermind::Net GTest::gtest_main)
+gtest_discover_tests(TcpSocketTests)
