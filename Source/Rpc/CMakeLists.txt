@@ -22,8 +22,8 @@ target_include_directories(Coppermind.Rpc PUBLIC .)
 add_library(Coppermind::Rpc ALIAS Coppermind.Rpc)
 
 add_executable(BinaryPackerTests BinaryPackerTests.cpp)
-target_link_libraries(BinaryPackerTests PRIVATE Coppermind::Rpc Coppermind::IO Catch2::Catch2WithMain)
-catch_discover_tests(BinaryPackerTests)
+target_link_libraries(BinaryPackerTests PRIVATE Coppermind::Rpc Coppermind::IO GTest::gtest_main)
+gtest_discover_tests(BinaryPackerTests)
 
 add_executable(RpcPackerTests RpcPackerTests.cpp)
 target_link_libraries(RpcPackerTests PRIVATE Coppermind::Rpc GTest::gtest_main)

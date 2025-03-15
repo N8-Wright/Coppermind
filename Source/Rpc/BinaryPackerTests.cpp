@@ -1,16 +1,15 @@
-#include "WriterStreamWrapper.h"
-#include "ReaderStreamWrapper.h"
-
 #include "BinaryPacker.h"
 #include "BinaryUnpacker.h"
+#include "ReaderStreamWrapper.h"
+#include "WriterStreamWrapper.h"
 
-#include <catch2/catch_test_macros.hpp>
+#include <gtest/gtest.h>
 #include <sstream>
 
 using namespace Coppermind::Rpc;
 using namespace Coppermind::IO;
 
-TEST_CASE("Integers Can Be Packed", "[BinaryPacker]")
+TEST(BinaryPacker, PackIntegers)
 {
     std::stringstream stream;
     WriterStreamWrapper writer(stream);
@@ -21,20 +20,20 @@ TEST_CASE("Integers Can Be Packed", "[BinaryPacker]")
 
     ReaderStreamWrapper reader(stream);
     BinaryUnpacker unpacker(reader);
-    REQUIRE(unpacker.Read<int32_t>() == 99);
-    REQUIRE(unpacker.Read<int32_t>() == 22);
+    ASSERT_EQ(unpacker.Read<int32_t>(), 99);
+    ASSERT_EQ(unpacker.Read<int32_t>(), 22);
 }
 
-class Test
+class TestClass
 {
 public:
 	int a = 0;
 	int b = 0;
-	Test()
+    TestClass()
 	{
 	}
 
-	Test(int a, int b)
+    TestClass(int a, int b)
 		: a(a), b(b)
 	{
 	}
@@ -54,22 +53,22 @@ public:
 	}
 };
 
-TEST_CASE("Test Class Can Be Packed", "[BinaryPacker]")
+TEST(BinaryPacker, PackClass)
 {
     std::stringstream stream;
     WriterStreamWrapper writer(stream);
     BinaryPacker packer(writer);
-    Test test(88, 99);
+    TestClass test(88, 99);
     packer << test;
 
     ReaderStreamWrapper reader(stream);
     BinaryUnpacker unpacker(reader);
-    auto output = unpacker.Read<Test>();
-    REQUIRE(test.a == output.a);
-    REQUIRE(test.b == output.b);
+    auto output = unpacker.Read<TestClass>();
+    ASSERT_EQ(test.a, output.a);
+    ASSERT_EQ(test.b, output.b);
 }
 
-TEST_CASE("C String Can Be Packed", "[BinaryPacker]")
+TEST(BinaryPacker, PackCString)
 {
     std::stringstream stream;
     WriterStreamWrapper writer(stream);
@@ -80,10 +79,10 @@ TEST_CASE("C String Can Be Packed", "[BinaryPacker]")
     ReaderStreamWrapper reader(stream);
     BinaryUnpacker unpacker(reader);
     auto output = unpacker.Read<std::string>();
-    REQUIRE(std::string("Hello, World!") == output);
+    ASSERT_EQ(std::string("Hello, World!"), output);
 }
 
-TEST_CASE("Standard String Can Be Packed", "[BinaryPacker]")
+TEST(BinaryPacker, PackString)
 {
     std::stringstream stream;
     WriterStreamWrapper writer(stream);
@@ -94,10 +93,10 @@ TEST_CASE("Standard String Can Be Packed", "[BinaryPacker]")
     ReaderStreamWrapper reader(stream);
     BinaryUnpacker unpacker(reader);
     auto output = unpacker.Read<std::string>();
-    REQUIRE(std::string("Hello, World!") == output);
+    ASSERT_EQ(std::string("Hello, World!"), output);
 }
 
-TEST_CASE("String View Can Be Packed", "[BinaryPacker]")
+TEST(BinaryPacker, PackStringView)
 {
     std::stringstream stream;
     WriterStreamWrapper writer(stream);
@@ -109,5 +108,5 @@ TEST_CASE("String View Can Be Packed", "[BinaryPacker]")
     ReaderStreamWrapper reader(stream);
     BinaryUnpacker unpacker(reader);
     auto output = unpacker.Read<std::string>();
-    REQUIRE(std::string("Hello, World!") == output);
+    ASSERT_EQ(std::string("Hello, World!"), output);
 }
