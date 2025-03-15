@@ -34,5 +34,5 @@ target_link_libraries(RpcProcessorTests PRIVATE Coppermind::Rpc GTest::gtest_mai
 gtest_discover_tests(RpcProcessorTests)
 
 add_executable(RpcUnpackerTests RpcUnpackerTests.cpp)
-target_link_libraries(RpcUnpackerTests PRIVATE Coppermind::Rpc Catch2::Catch2WithMain)
-catch_discover_tests(RpcUnpackerTests)
+target_link_libraries(RpcUnpackerTests PRIVATE Coppermind::Rpc GTest::gtest_main)
+gtest_discover_tests(RpcUnpackerTests)

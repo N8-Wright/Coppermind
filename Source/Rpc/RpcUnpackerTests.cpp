@@ -1,18 +1,17 @@
-#include "WriterStreamWrapper.h"
-#include "ReaderStreamWrapper.h"
-
-#include "RpcUnpacker.h"
 #include "BinaryPacker.h"
+#include "ReaderStreamWrapper.h"
 #include "Rpc.h"
 #include "RpcException.h"
+#include "RpcUnpacker.h"
+#include "WriterStreamWrapper.h"
 
-#include <catch2/catch_test_macros.hpp>
+#include <gtest/gtest.h>
 #include <sstream>
 
 using namespace Coppermind::Rpc;
 using namespace Coppermind::IO;
 
-TEST_CASE("RPC Unpacker throws when invalid version encountered", "[RpcUnpacker]")
+TEST(RpcUnpacker, ThrowsWhenInvalidVersionEncountered)
 {
     std::stringstream stream;
     WriterStreamWrapper writer(stream);
@@ -22,5 +21,5 @@ TEST_CASE("RPC Unpacker throws when invalid version encountered", "[RpcUnpacker]
 
     ReaderStreamWrapper reader(stream);
     RpcUnpacker unpacker(reader);
-    REQUIRE_THROWS_AS(unpacker.ReadVersion(), RpcException);
+    ASSERT_THROW(unpacker.ReadVersion(), RpcException);
 }
