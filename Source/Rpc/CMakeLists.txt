@@ -26,8 +26,8 @@ target_link_libraries(BinaryPackerTests PRIVATE Coppermind::Rpc Coppermind::IO C
 catch_discover_tests(BinaryPackerTests)
 
 add_executable(RpcPackerTests RpcPackerTests.cpp)
-target_link_libraries(RpcPackerTests PRIVATE Coppermind::Rpc Catch2::Catch2WithMain)
-catch_discover_tests(RpcPackerTests)
+target_link_libraries(RpcPackerTests PRIVATE Coppermind::Rpc GTest::gtest_main)
+gtest_discover_tests(RpcPackerTests)
 
 add_executable(RpcProcessorTests RpcProcessorTests.cpp)
 target_link_libraries(RpcProcessorTests PRIVATE Coppermind::Rpc GTest::gtest_main)

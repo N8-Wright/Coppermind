@@ -1,16 +1,16 @@
-#include "WriterStreamWrapper.h"
-#include "ReaderStreamWrapper.h"
-
-#include "RpcPacker.h"
 #include "BinaryUnpacker.h"
+#include "ReaderStreamWrapper.h"
 #include "Rpc.h"
+#include "RpcPacker.h"
+#include "WriterStreamWrapper.h"
 
-#include <catch2/catch_test_macros.hpp>
+#include <gtest/gtest.h>
 #include <sstream>
 
 using namespace Coppermind::Rpc;
 using namespace Coppermind::IO;
-TEST_CASE("RPC Packer encodes version information", "[RpcPacker]")
+
+TEST(RpcPacker, EncodesVersionInformation)
 {
     std::stringstream stream;
     WriterStreamWrapper writer(stream);
@@ -20,6 +20,6 @@ TEST_CASE("RPC Packer encodes version information", "[RpcPacker]")
 
     ReaderStreamWrapper reader(stream);
     BinaryUnpacker unpacker(reader);
-    REQUIRE(unpacker.Read<uint32_t>() == CurrentVersion);
-    REQUIRE(unpacker.Read<std::string>() == "Test");
+    ASSERT_EQ(unpacker.Read<uint32_t>(), CurrentVersion);
+    ASSERT_EQ(unpacker.Read<std::string>(), "Test");
 }
