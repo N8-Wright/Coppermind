@@ -19,8 +19,14 @@ namespace Coppermind::Rpc
         uint32_t ReadVersion();
         std::string ReadProcedureName();
 
-        template<typename T>
-		T Read();
+		template<typename T>
+		T Read()
+		{
+			T value;
+			value.Deserialize(*this);
+			return value;
+		}
+
 		template<> int32_t Read();
 		template<> uint32_t Read();
         template<> RpcStatus Read();

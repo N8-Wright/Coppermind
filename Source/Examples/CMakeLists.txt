@@ -13,3 +13,5 @@ set_target_properties(HelloWorldClientInvalidParam PROPERTIES FOLDER "Examples")
 add_executable(HelloWorldClientProcedureNameTooLong HelloWorldClientProcedureNameTooLong.cpp)
 target_link_libraries(HelloWorldClientProcedureNameTooLong Coppermind::Rpc)
 set_target_properties(HelloWorldClientProcedureNameTooLong PROPERTIES FOLDER "Examples")
+
+add_subdirectory(ComplexRequestResponse)

@@ -1,0 +1,7 @@
+add_executable(ComplexRequestResponseSrv Server.cpp Request.h Response.h)
+target_link_libraries(ComplexRequestResponseSrv Coppermind::Rpc)
+set_target_properties(ComplexRequestResponseSrv PROPERTIES FOLDER "Examples/ComplexRequestResponse")
+
+add_executable(ComplexRequestResponseClient Client.cpp Request.h Response.h)
+target_link_libraries(ComplexRequestResponseClient Coppermind::Rpc)
+set_target_properties(ComplexRequestResponseClient PROPERTIES FOLDER "Examples/ComplexRequestResponse")
