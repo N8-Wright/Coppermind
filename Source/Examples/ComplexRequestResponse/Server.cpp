@@ -22,7 +22,9 @@ int main()
                 << "Id: " << req.Id() << "\n"
                 << "Metadata: " << req.Metadata() << "\n";
 
+            const Response res("server printed the request", req.Id());
             output << Rpc::RpcStatus::Ok;
+            output << res;
         });
 
 

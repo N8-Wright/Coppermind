@@ -10,7 +10,8 @@ using namespace Coppermind;
 
 void ProcessResponse(Rpc::RpcUnpacker& input)
 {
-    (void)input;
+    const auto res = input.Read<Response>();
+    std::cout << "Received response for request \"" << res.Id() << "\" with a message \"" << res.Result() << "\"\n";
 }
 
 int main()
