@@ -1,17 +1,2 @@
-add_executable(HelloWorldSrv HelloWorldSrv.cpp)
-target_link_libraries(HelloWorldSrv Coppermind::Rpc)
-set_target_properties(HelloWorldSrv PROPERTIES FOLDER "Examples")
-
-add_executable(HelloWorldClient HelloWorldClient.cpp)
-target_link_libraries(HelloWorldClient Coppermind::Rpc)
-set_target_properties(HelloWorldClient PROPERTIES FOLDER "Examples")
-
-add_executable(HelloWorldClientInvalidParam HelloWorldClientInvalidParam.cpp)
-target_link_libraries(HelloWorldClientInvalidParam Coppermind::Rpc)
-set_target_properties(HelloWorldClientInvalidParam PROPERTIES FOLDER "Examples")
-
-add_executable(HelloWorldClientProcedureNameTooLong HelloWorldClientProcedureNameTooLong.cpp)
-target_link_libraries(HelloWorldClientProcedureNameTooLong Coppermind::Rpc)
-set_target_properties(HelloWorldClientProcedureNameTooLong PROPERTIES FOLDER "Examples")
-
 add_subdirectory(ComplexRequestResponse)
+add_subdirectory(HelloWorld)
